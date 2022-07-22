@@ -7,7 +7,6 @@ from easygraph.utils import pairwise
 
 __all__ = ["empty_graph", "path_graph", "complete_graph"]
 
-
 @nodes_or_number(0)
 def empty_graph(n=0, create_using=None, default=Graph):
     if create_using is None:
