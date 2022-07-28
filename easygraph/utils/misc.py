@@ -1,4 +1,5 @@
-from itertools import tee, chain
+from itertools import chain
+from itertools import tee
 
 
 __all__ = ["split_len", "split", "nodes_equal", "edges_equal", "pairwise"]
