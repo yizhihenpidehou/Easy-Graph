@@ -6,15 +6,22 @@ class TestClustering:
     @classmethod
     def setup_class(cls):
         pytest.importorskip("numpy")
+
     def test_clustering(self):
         G = eg.DiGraph()
-        G.add_edge('1','2',weight=16)
-        G.add_edge('2', '3', weight=16)
-        G.add_edge('4', '3', weight=16)
-        G.add_edge('3', '4', weight=23)
-        G.add_edge('3', '5', weight=16)
-        G.add_edge('4', '2', weight=20)
-        assert eg.clustering(G) == {'1': 0, '2': 0.3333333333333333, '3': 0.2, '4': 0.5, '5': 0}
+        G.add_edge("1", "2", weight=16)
+        G.add_edge("2", "3", weight=16)
+        G.add_edge("4", "3", weight=16)
+        G.add_edge("3", "4", weight=23)
+        G.add_edge("3", "5", weight=16)
+        G.add_edge("4", "2", weight=20)
+        assert eg.clustering(G) == {
+            "1": 0,
+            "2": 0.3333333333333333,
+            "3": 0.2,
+            "4": 0.5,
+            "5": 0,
+        }
 
     def test_path(self):
         G = eg.path_graph(10)
@@ -70,6 +77,8 @@ class TestClustering:
             3 / 6,
             3 / 6,
         ]
+
+
 class TestDirectedClustering:
     def test_clustering(self):
         G = eg.DiGraph()
@@ -134,6 +143,7 @@ class TestDirectedClustering:
         G.add_edge(0, 4)
         assert eg.clustering(G)[0] == 1 / 6
 
+
 class TestDirectedAverageClustering:
     @classmethod
     def setup_class(cls):
@@ -145,7 +155,7 @@ class TestDirectedAverageClustering:
             eg.average_clustering(G)
 
     def test_average_clustering(self):
-        G=eg.empty_graph(range(3),eg.DiGraph())
+        G = eg.empty_graph(range(3), eg.DiGraph())
         G.add_edges_from(eg.pairwise(range(3), cyclic=True))
         G.add_edge(2, 3)
         assert eg.average_clustering(G) == (1 + 1 + 1 / 3) / 8
@@ -205,7 +215,7 @@ class TestDirectedWeightedClustering:
 
     def test_path(self):
         G = eg.path_graph(10, create_using=eg.DiGraph())
-        print("type:",eg.clustering(G, weight="weight"))
+        print("type:", eg.clustering(G, weight="weight"))
         assert list(eg.clustering(G, weight="weight").values()) == [
             0,
             0,
@@ -265,6 +275,7 @@ class TestDirectedWeightedClustering:
         # Relaxed comparisons to allow graphblas-algorithms to pass tests
         np.testing.assert_allclose(eg.clustering(G, weight="weight")[0], 1 / 12)
         np.testing.assert_allclose(eg.clustering(G, 0, weight="weight"), 1 / 12)
+
 
 class TestWeightedClustering:
     @classmethod
